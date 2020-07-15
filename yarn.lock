@@ -1680,6 +1680,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sgratzl/boxplots@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@sgratzl/boxplots@npm:1.0.0"
+  checksum: c12ef0c7201a48e4eba4b611c9d71c983916149337603fb83ba84a9a4d12eeb985ab69e92c8d58b66fb2b805bc1c9cd990044378d7bc06c7a229bf158ef09390
+  languageName: node
+  linkType: hard
+
 "@sindresorhus/is@npm:^0.14.0":
   version: 0.14.0
   resolution: "@sindresorhus/is@npm:0.14.0"
@@ -1789,6 +1796,29 @@ __metadata:
   version: 1.1.1
   resolution: "@types/color-name@npm:1.1.1"
   checksum: 8311db94a9c4ecd247763b81e783ee49d87678b4ce6a7ee502e2bd5cea242b7357804a04855db009f713174bc654cc0c01c7303d40d757e5d710f5ac0368500f
+  languageName: node
+  linkType: hard
+
+"@types/cytoscape@npm:^3.14.7":
+  version: 3.14.7
+  resolution: "@types/cytoscape@npm:3.14.7"
+  checksum: 60f957ac0dad71696d662b4ac43965570779041cac55d096c2ce29604f9da99173cdd037f332fa9d3a3d918cb91e53c5bc7a6d6acd0dc05cdb433560caa2ebf6
+  languageName: node
+  linkType: hard
+
+"@types/d3-scale@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@types/d3-scale@npm:2.2.0"
+  dependencies:
+    "@types/d3-time": "*"
+  checksum: e0d8846d482c22e8150b255a9be5ed77d2d9edc1767ce2a2801fe855448cc77e54306f2801afbb98ffd721629269efcc49c51ba36ac5bb42df05b1100dd3c0d5
+  languageName: node
+  linkType: hard
+
+"@types/d3-time@npm:*":
+  version: 1.0.10
+  resolution: "@types/d3-time@npm:1.0.10"
+  checksum: f125a4c07f745e518205b8914f878a863be9f7c4ec64508ab533fd42627507388c31eac441fb4a3555cfa34b7f4ffa0b19e74ee02897db978c0656ea60c4bb90
   languageName: node
   linkType: hard
 
@@ -3682,6 +3712,126 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cytoscape-layers@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "cytoscape-layers@npm:2.0.0"
+  dependencies:
+    "@types/cytoscape": ^3.14.7
+  peerDependencies:
+    cytoscape: ^3.15.2
+  checksum: 864157068399e3babd79b90aeea1f4c3d7118241186d4841433f0af95c8a9aebe3b316d23a0a9bec16741f9254de11774a7ecff454b0b788fd825c1be0a000bc
+  languageName: node
+  linkType: hard
+
+"cytoscape-overlaps@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "cytoscape-overlaps@workspace:."
+  dependencies:
+    "@rollup/plugin-commonjs": ^14.0.0
+    "@sgratzl/boxplots": ^1.0.0
+    "@types/cytoscape": ^3.14.7
+    "@types/d3-scale": ^2.2.0
+    "@types/jest": ^26.0.4
+    "@typescript-eslint/eslint-plugin": ^3.6.1
+    "@typescript-eslint/parser": ^3.6.1
+    "@yarnpkg/pnpify": ^2.1.0
+    cytoscape: ^3.15.2
+    cytoscape-layers: ^2.0.0
+    d3-scale: ^3.2.1
+    eslint: ^7.4.0
+    eslint-config-prettier: ^6.11.0
+    eslint-config-react-app: ^5.2.1
+    eslint-plugin-flowtype: ^5.2.0
+    eslint-plugin-import: ^2.22.0
+    eslint-plugin-jsx-a11y: ^6.3.1
+    eslint-plugin-prettier: ^3.1.4
+    eslint-plugin-react: ^7.20.3
+    eslint-plugin-react-hooks: ^4.0.8
+    prettier: ^2.0.5
+    release-it: ^13.6.5
+    rimraf: ^3.0.2
+    rollup: ^2.21.0
+    rollup-plugin-cleanup: ^3.1.1
+    rollup-plugin-dts: ^1.4.8
+    rollup-plugin-pnp-resolve: ^2.0.0
+    tsdx: ~0.13.2
+    tslib: ^2.0.0
+    typedoc: ^0.17.8
+    typescript: ^3.9.6
+  peerDependencies:
+    cytoscape: ^3.15.2
+  languageName: unknown
+  linkType: soft
+
+"cytoscape@npm:^3.15.2":
+  version: 3.15.2
+  resolution: "cytoscape@npm:3.15.2"
+  dependencies:
+    heap: ^0.2.6
+    lodash.debounce: ^4.0.8
+  checksum: e1cdfb8eff6104569d513ac86a8923e6f590f9fb247db7513d482d0f70938702436e1a80f12c46f43bd8feda97e176e9c12196ac57362f557cc5dd33883382de
+  languageName: node
+  linkType: hard
+
+"d3-array@npm:1.2.0 - 2":
+  version: 2.4.0
+  resolution: "d3-array@npm:2.4.0"
+  checksum: 666ca4a26bde9094472ccb795a2f5d8eb4df281d42dd97b7349b9ba990b089dfc49f2c23fd64080d95d319841870efcf6c6095cbe95de491be36847184b30738
+  languageName: node
+  linkType: hard
+
+"d3-color@npm:1":
+  version: 1.4.1
+  resolution: "d3-color@npm:1.4.1"
+  checksum: a579fdc2f4ec50980e32d0ac5212c3023ee9c6a7555ae698278f05c9f7d06322f83dde01253f672f9f9fd05d8860f0256d25aee999a0d32cf4111d731413f5da
+  languageName: node
+  linkType: hard
+
+"d3-format@npm:1":
+  version: 1.4.4
+  resolution: "d3-format@npm:1.4.4"
+  checksum: a0961a9c92e56588203b93226837bda242642016f798ab241136b1db564f2719a8c0db2f68b1a4cdd9079a62e065be4e4f35f213d2b59b2d34a8e05e6f0ba860
+  languageName: node
+  linkType: hard
+
+"d3-interpolate@npm:^1.2.0":
+  version: 1.4.0
+  resolution: "d3-interpolate@npm:1.4.0"
+  dependencies:
+    d3-color: 1
+  checksum: beea08fb3a712ccb992082c058a96a108f31692bbcecbf8029539ff378747b666fd0f33798b313835a2cb019e399a30fd1f5b643822f1cc0be3c86b4fe4730c7
+  languageName: node
+  linkType: hard
+
+"d3-scale@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "d3-scale@npm:3.2.1"
+  dependencies:
+    d3-array: 1.2.0 - 2
+    d3-format: 1
+    d3-interpolate: ^1.2.0
+    d3-time: 1
+    d3-time-format: 2
+  checksum: 09937be16d680c5f8c3741ed54f270eba5c703de2e954fb376b2d996f49725f40aadb783ad71bc19c64464fbb5234075e900a5b063f83eee599b049157cb65d5
+  languageName: node
+  linkType: hard
+
+"d3-time-format@npm:2":
+  version: 2.2.3
+  resolution: "d3-time-format@npm:2.2.3"
+  dependencies:
+    d3-time: 1
+  checksum: b29dfa87cf60600155266848ad40c9941c1c09cfc30bd3386da8ed6c853c2131abc957df55427b1ed7e9817ab4381387477f327f2583bd666393f2f6b7dda539
+  languageName: node
+  linkType: hard
+
+"d3-time@npm:1":
+  version: 1.1.0
+  resolution: "d3-time@npm:1.1.0"
+  checksum: d083c2181bbd1207f5fc8a0bfc2a8c1a44a56b3781dd6ef73a70f1d82aa74f49d1b410d4afc8e1a10db459fd60fdc75191ac89b8cdf4ee2705d7f3a1f0034fac
+  languageName: node
+  linkType: hard
+
 "damerau-levenshtein@npm:^1.0.4, damerau-levenshtein@npm:^1.0.6":
   version: 1.0.6
   resolution: "damerau-levenshtein@npm:1.0.6"
@@ -5459,6 +5609,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"heap@npm:^0.2.6":
+  version: 0.2.6
+  resolution: "heap@npm:0.2.6"
+  checksum: 7bb8c80753b64cfbb4685bd0aa4ba52101d63c4a90d450b151931e23d0e30552a60be5db4dd109d1a18e73d1af27ceca9884b1cc451a1b7757f3dd89bcdc21a4
+  languageName: node
+  linkType: hard
+
 "highlight.js@npm:^10.0.0":
   version: 10.0.3
   resolution: "highlight.js@npm:10.0.3"
@@ -7106,6 +7263,13 @@ fsevents@^1.2.7:
   dependencies:
     p-locate: ^4.1.0
   checksum: c58f49d45c8672d0a290dea0ce41fcb27205b3f2d61452ba335ef3b42ad36c10c31b1f061b46d96dd4b81e9a00e8a2897bc124d75623b80a9f6d36b1e754a6b5
+  languageName: node
+  linkType: hard
+
+"lodash.debounce@npm:^4.0.8":
+  version: 4.0.8
+  resolution: "lodash.debounce@npm:4.0.8"
+  checksum: b6042bd8c09ff1961c9127d32266316bc21f946ece5e3464a663ec61fadb98e7d56ec0ef7e23b47d393695310c19cf24e651c1756be6da91ac02c72be7f79465
   languageName: node
   linkType: hard
 
@@ -10162,38 +10326,6 @@ resolve@1.15.1:
   checksum: 657ced9ab8336c0bf3c2168c891a261d1ecb9812855c23bc3784216b50b34a4c8468c76452bdf6242e955d734f362a755f71aef126ebe89be8e1124390743790
   languageName: node
   linkType: hard
-
-"cytoscape-overlaps@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "cytoscape-overlaps@workspace:."
-  dependencies:
-    "@rollup/plugin-commonjs": ^14.0.0
-    "@types/jest": ^26.0.4
-    "@typescript-eslint/eslint-plugin": ^3.6.1
-    "@typescript-eslint/parser": ^3.6.1
-    "@yarnpkg/pnpify": ^2.1.0
-    eslint: ^7.4.0
-    eslint-config-prettier: ^6.11.0
-    eslint-config-react-app: ^5.2.1
-    eslint-plugin-flowtype: ^5.2.0
-    eslint-plugin-import: ^2.22.0
-    eslint-plugin-jsx-a11y: ^6.3.1
-    eslint-plugin-prettier: ^3.1.4
-    eslint-plugin-react: ^7.20.3
-    eslint-plugin-react-hooks: ^4.0.8
-    prettier: ^2.0.5
-    release-it: ^13.6.5
-    rimraf: ^3.0.2
-    rollup: ^2.21.0
-    rollup-plugin-cleanup: ^3.1.1
-    rollup-plugin-dts: ^1.4.8
-    rollup-plugin-pnp-resolve: ^2.0.0
-    tsdx: ~0.13.2
-    tslib: ^2.0.0
-    typedoc: ^0.17.8
-    typescript: ^3.9.6
-  languageName: unknown
-  linkType: soft
 
 "tsconfig-paths@npm:^3.9.0":
   version: 3.9.0

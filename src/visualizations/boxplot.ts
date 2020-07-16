@@ -1,13 +1,10 @@
-import { IAttrAccessor, IScale, IVisualization } from './interfaces';
+import { IAttrAccessor, IVisualization, IDimension } from './interfaces';
 import { resolveAccessor, resolveScale } from './utils';
 import { IBoxPlot, boxplot, BoxplotStatsOptions } from '@sgratzl/boxplots';
+import { IBarOptions, defaultBarOptions } from './bar';
 // import seedrandom from 'seedrandom';
 
-export interface IBoxplotOptions extends BoxplotStatsOptions {
-  scale: IScale;
-  backgroundColor: string;
-  borderColor: string;
-
+export interface IBoxplotOptions extends BoxplotStatsOptions, IBarOptions {
   outlierRadius: number;
   outlierBackgroundColor: string;
   itemRadius: number;
@@ -17,9 +14,7 @@ export interface IBoxplotOptions extends BoxplotStatsOptions {
 }
 
 const defaultOptions: IBoxplotOptions = {
-  scale: [0, 1],
-  backgroundColor: 'green',
-  borderColor: 'black',
+  ...defaultBarOptions,
 
   outlierRadius: 2,
   get outlierBackgroundColor() {
@@ -85,52 +80,62 @@ export function renderBoxplot(
     //   );
     // }
 
-    ctx.strokeStyle = o.borderColor;
-    ctx.fillStyle = o.backgroundColor;
-
-    // draw box
-    const q1 = scale(b.q1);
-    const q3 = scale(b.q3);
-    const boxHeight = dim.height - 2 * o.boxPadding;
-    ctx.fillRect(q1, o.boxPadding, q3 - q1, boxHeight);
-
-    // draw median line
-    ctx.beginPath();
-    const median = scale(b.median);
-    const whiskerLow = scale(b.whiskerLow);
-    const whiskerHigh = scale(b.whiskerHigh);
-
-    // whisker line
-    ctx.moveTo(whiskerLow, 0);
-    ctx.lineTo(whiskerLow, dim.height);
-    ctx.moveTo(whiskerHigh, 0);
-    ctx.lineTo(whiskerHigh, dim.height);
-    ctx.moveTo(whiskerLow, dim.height / 2);
-    ctx.lineTo(q1, dim.height / 2);
-    ctx.moveTo(whiskerHigh, dim.height / 2);
-    ctx.lineTo(q3, dim.height / 2);
-
-    // box stroke
-    ctx.rect(q1, o.boxPadding, q3 - q1, boxHeight);
-
-    // draw median line
-    ctx.moveTo(median, o.boxPadding);
-    ctx.lineTo(median, dim.height - o.boxPadding);
-
-    ctx.stroke();
-
-    if (o.outlierRadius > 0 && b.outlier.length > 0) {
-      ctx.fillStyle = o.outlierBackgroundColor;
-      renderPoints(
-        ctx,
-        b.outlier,
-        o.outlierRadius,
-        (v) => scale(v),
-        () => dim.height / 2
-      );
-    }
+    renderBoxplotImpl(ctx, o, scale, b, dim);
   };
   r.defaultHeight = 10;
   r.defaultPosition = 'below';
   return r;
+}
+
+function renderBoxplotImpl(
+  ctx: CanvasRenderingContext2D,
+  o: IBoxplotOptions,
+  scale: (v: number) => number,
+  b: IBoxPlot,
+  dim: IDimension
+) {
+  ctx.strokeStyle = o.borderColor;
+  ctx.fillStyle = o.backgroundColor;
+
+  // draw box
+  const q1 = scale(b.q1);
+  const q3 = scale(b.q3);
+  const boxHeight = dim.height - 2 * o.boxPadding;
+  ctx.fillRect(q1, o.boxPadding, q3 - q1, boxHeight);
+
+  // draw median line
+  ctx.beginPath();
+  const median = scale(b.median);
+  const whiskerLow = scale(b.whiskerLow);
+  const whiskerHigh = scale(b.whiskerHigh);
+
+  // whisker line
+  ctx.moveTo(whiskerLow, 0);
+  ctx.lineTo(whiskerLow, dim.height);
+  ctx.moveTo(whiskerHigh, 0);
+  ctx.lineTo(whiskerHigh, dim.height);
+  ctx.moveTo(whiskerLow, dim.height / 2);
+  ctx.lineTo(q1, dim.height / 2);
+  ctx.moveTo(whiskerHigh, dim.height / 2);
+  ctx.lineTo(q3, dim.height / 2);
+
+  // box stroke
+  ctx.rect(q1, o.boxPadding, q3 - q1, boxHeight);
+
+  // draw median line
+  ctx.moveTo(median, o.boxPadding);
+  ctx.lineTo(median, dim.height - o.boxPadding);
+
+  ctx.stroke();
+
+  if (o.outlierRadius > 0 && b.outlier.length > 0) {
+    ctx.fillStyle = o.outlierBackgroundColor;
+    renderPoints(
+      ctx,
+      b.outlier,
+      o.outlierRadius,
+      (v) => scale(v),
+      () => dim.height / 2
+    );
+  }
 }

@@ -17,3 +17,5 @@ npm-debug.log*
 *.tgz
 /.vscode/extensions.json
 /docs
+/samples/*.js
+*.map

@@ -2,33 +2,45 @@ namespace DefaultNS {
   declare const cytoscape: typeof import('cytoscape');
   declare const CytoscapeLayers: typeof import('cytoscape-layers');
   declare const CytoscapeOverlays: typeof import('../dist');
+  declare const cytoscapeSbgnStylesheet: any;
 
   const cy = cytoscape({
     container: document.getElementById('app'),
     layout: {
-      name: 'grid',
+      name: 'preset',
     },
-    elements: [
-      ...Array(100)
-        .fill(0)
-        .map((_, i) => ({
-          data: {
-            id: `i${i}`,
-            label: `L${i}`,
-            value: Math.random(),
-            values: Array(100)
-              .fill(0)
-              .map(() => Math.random()),
-          },
-        })),
-    ],
+    style: cytoscapeSbgnStylesheet(cytoscape),
+    elements: fetch('https://raw.githubusercontent.com/PathwayCommons/cytoscape-sbgn-stylesheet/master/demo.json')
+      .then((r) => r.json())
+      .then((r) =>
+        r.map((d: any) => {
+          d.data.expression = Math.random();
+          d.data.annotationArray = Array(100)
+            .fill(0)
+            .map(() => Math.random());
+          return d;
+        })
+      ),
   });
-  CytoscapeOverlays.overlays.call(cy, [
-    {
-      vis: CytoscapeOverlays.renderBar('value'),
-    },
-    {
-      vis: CytoscapeOverlays.renderBoxplot('values'),
-    },
-  ]);
+  cy.one('ready', () => {
+    CytoscapeOverlays.overlays.call(
+      cy,
+      [
+        {
+          vis: CytoscapeOverlays.renderBar('expression', {
+            backgroundColor: 'steelblue',
+          }),
+        },
+        {
+          vis: CytoscapeOverlays.renderBoxplot('annotationArray', {
+            backgroundColor: 'darkred',
+          }),
+        },
+      ],
+      {
+        selector: '[class="macromolecule"]',
+        updateOn: 'render',
+      }
+    );
+  });
 }

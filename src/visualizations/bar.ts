@@ -1,40 +1,38 @@
-import cy from 'cytoscape';
-import { IVisualization, IAttrAccessor, IScale } from './interfaces';
-import { scaleLinear } from 'd3-scale';
-import { resolveScale, resolveAccessor } from './utils';
+import { IAttrAccessor, IScale, IVisualization } from './interfaces';
+import { resolveAccessor, resolveScale } from './utils';
 
 export interface IBarOptions {
   scale: IScale;
-  fillColor: string;
-  strokeColor: string;
-  height: number;
+  backgroundColor: string;
+  borderColor: string;
 }
 
 const defaultOptions: IBarOptions = {
   scale: [0, 1],
-  fillColor: 'green',
-  strokeColor: 'black',
-  height: 5,
+  backgroundColor: 'green',
+  borderColor: 'black',
 };
 
-export function renderBar(attr: IAttrAccessor, options: Partial<IBarOptions> = {}): IVisualization {
+export function renderBar(attr: IAttrAccessor<number>, options: Partial<IBarOptions> = {}): IVisualization {
   const o = Object.assign({}, defaultOptions, options);
   const acc = resolveAccessor(attr);
   const scale = resolveScale(o.scale);
 
-  return (ctx, node, y, width) => {
+  const r: IVisualization = (ctx, node, dim) => {
     const value = acc(node);
 
     if (value != null && !Number.isNaN(value)) {
-      ctx.fillStyle = o.fillColor;
+      ctx.fillStyle = o.backgroundColor;
       const v = scale(value);
-      ctx.fillRect(0, y, width * v, o.height);
+      ctx.fillRect(0, 0, dim.width * v, dim.height);
     }
 
-    if (o.strokeColor) {
-      ctx.strokeStyle = o.strokeColor;
-      ctx.strokeRect(0, y, width, o.height);
+    if (o.borderColor) {
+      ctx.strokeStyle = o.borderColor;
+      ctx.strokeRect(0, 0, dim.width, dim.height);
     }
-    return o.height;
   };
+  r.defaultHeight = 5;
+  r.defaultPosition = 'below';
+  return r;
 }

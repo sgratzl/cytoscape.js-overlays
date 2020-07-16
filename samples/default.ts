@@ -11,22 +11,24 @@ namespace DefaultNS {
     elements: [
       ...Array(100)
         .fill(0)
-        .map((_, i) => ({ data: { id: `i${i}`, label: `L${i}` } })),
+        .map((_, i) => ({
+          data: {
+            id: `i${i}`,
+            label: `L${i}`,
+            value: Math.random(),
+            values: Array(100)
+              .fill(0)
+              .map(() => Math.random()),
+          },
+        })),
     ],
   });
-  const layers = CytoscapeLayers.layers(cy);
-  // render centered labels on each node
-  layers.renderPerNode(layers.append('html'), () => {}, {
-    init: (elem, node) => {
-      elem.style.textAlign = 'center';
-      elem.textContent = node.data('label') || node.id();
-      elem.addEventListener('click', () => {
-        console.log(node.id());
-      });
+  CytoscapeOverlays.overlays.call(cy, [
+    {
+      vis: CytoscapeOverlays.renderBar('value'),
     },
-    transform: 'translate(-50%,-50%)',
-    position: 'center',
-    uniqueElements: true,
-    checkBounds: false,
-  });
+    {
+      vis: CytoscapeOverlays.renderBoxplot('values'),
+    },
+  ]);
 }

@@ -1,6 +1,6 @@
 {
   "name": "cytoscape-overlays",
-  "description": "TODO",
+  "description": "A cytoscape.js plugin for rendering bar, histogram, and boxplot node overlays",
   "version": "1.0.0",
   "publishConfig": {
     "access": "public"
@@ -11,16 +11,16 @@
     "url": "https://www.sgratzl.com"
   },
   "license": "MIT",
-  "homepage": "https://github.com/sgratzl/cytoscape-overlays",
+  "homepage": "https://github.com/sgratzl/cytoscape.js-overlays",
   "bugs": {
-    "url": "https://github.com/sgratzl/cytoscape-overlays/issues"
+    "url": "https://github.com/sgratzl/cytoscape.js-overlays/issues"
   },
   "keywords": [
     "cytoscape"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/sgratzl/cytoscape-overlays.git"
+    "url": "https://github.com/sgratzl/cytoscape.js-overlays.git"
   },
   "module": "dist/cytoscapeoverlays.esm.js",
   "main": "dist/cytoscapeoverlays.umd.development.js",

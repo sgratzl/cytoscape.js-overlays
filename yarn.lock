@@ -3721,9 +3721,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cytoscape-overlaps@workspace:.":
+"cytoscape-overlays@workspace:.":
   version: 0.0.0-use.local
-  resolution: "cytoscape-overlaps@workspace:."
+  resolution: "cytoscape-overlays@workspace:."
   dependencies:
     "@rollup/plugin-commonjs": ^14.0.0
     "@sgratzl/boxplots": ^1.0.0

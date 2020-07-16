@@ -32,8 +32,8 @@ module.exports = {
       })
     );
     config.output.banner = `/**
- * cytoscape-overlaps
- * https://github.com/sgratzl/cytoscape-overlaps
+ * cytoscape-overlays
+ * https://github.com/sgratzl/cytoscape-overlays
  *
  * Copyright (c) 2020 Samuel Gratzl <sam@sgratzl.com>
  */`;

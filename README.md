@@ -10,7 +10,7 @@ Great for showing numerical attributes such as experimental data of pathways nod
 ## Install
 
 ```sh
-npm install --save cytoscape cytoscape-layers cytoscape-overlaps
+npm install --save cytoscape cytoscape-layers cytoscape-overlays
 ```
 
 ## Usage
@@ -72,7 +72,7 @@ cy.overlays(
 );
 ```
 
-see [Samples](https://github.com/sgratzl/cytoscape.js-overlaps/tree/master/samples) on Github
+see [Samples](https://github.com/sgratzl/cytoscape.js-overlays/tree/master/samples) on Github
 
 or at this [![Open in CodePen][codepen]](https://codepen.io/sgratzl/pen/TODO)
 
@@ -102,9 +102,9 @@ yarn release:pre
 
 [mit-image]: https://img.shields.io/badge/License-MIT-yellow.svg
 [mit-url]: https://opensource.org/licenses/MIT
-[npm-image]: https://badge.fury.io/js/cytoscape-overlaps.svg
-[npm-url]: https://npmjs.org/package/cytoscape-overlaps
-[github-actions-image]: https://github.com/sgratzl/cytoscape.js-overlaps/workflows/ci/badge.svg
-[github-actions-url]: https://github.com/sgratzl/cytoscape.js-overlaps/actions
+[npm-image]: https://badge.fury.io/js/cytoscape-overlays.svg
+[npm-url]: https://npmjs.org/package/cytoscape-overlays
+[github-actions-image]: https://github.com/sgratzl/cytoscape.js-overlays/workflows/ci/badge.svg
+[github-actions-url]: https://github.com/sgratzl/cytoscape.js-overlays/actions
 [codepen]: https://img.shields.io/badge/CodePen-open-blue?logo=codepen
 [codesandbox]: https://img.shields.io/badge/CodeSandbox-open-blue?logo=codesandbox

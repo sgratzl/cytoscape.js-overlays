@@ -17,9 +17,62 @@
     <div id="app"></div>
     <script src="https://cdn.jsdelivr.net/npm/cytoscape"></script>
     <script src="https://cdn.jsdelivr.net/npm/cytoscape-layers"></script>
-    <script src="https://cdn.jsdelivr.net/npm/cytoscape-sbgn-stylesheet"></script>
-    <script src="https://cdn.jsdelivr.net/npm/cytoscape-sbgn-stylesheet"></script>
     <script src="../dist/cytoscapeoverlays.umd.development.js"></script>
-    <script src="default.js"></script>
+    <script>
+      const cy = cytoscape({
+        container: document.getElementById('app'),
+        elements: [
+          {
+            data: {
+              id: 'a',
+              value: Math.random(),
+              values: Array(100)
+                .fill(0)
+                .map(() => Math.random()),
+            },
+          },
+          {
+            data: {
+              id: 'b',
+              value: Math.random(),
+              values: Array(100)
+                .fill(0)
+                .map(() => Math.random()),
+            },
+          },
+          {
+            data: {
+              id: 'ab',
+              source: 'a',
+              target: 'b',
+            },
+          },
+        ],
+      });
+      cy.overlays(
+        [
+          {
+            position: 'above',
+            vis: CytoscapeOverlays.renderBar('value', {
+              backgroundColor: 'steelblue',
+            }),
+          },
+          {
+            vis: CytoscapeOverlays.renderBoxplot('values', {
+              backgroundColor: 'darkred',
+            }),
+          },
+          {
+            vis: CytoscapeOverlays.renderHistogram('values', {
+              backgroundColor: 'darkgreen',
+            }),
+          },
+        ],
+        {
+          updateOn: 'render',
+          backgroundColor: 'white',
+        }
+      );
+    </script>
   </body>
 </html>

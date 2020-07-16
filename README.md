@@ -2,17 +2,75 @@
 
 [![License: MIT][mit-image]][mit-url] [![NPM Package][npm-image]][npm-url] [![Github Actions][github-actions-image]][github-actions-url]
 
-TODO
+A [Cytoscape.js](https://js.cytoscape.org) plugin for adding layers that shows bars, histograms, or boxplots next to nodes.
+Great for showing numerical attributes such as experimental data of pathways nodes.
+
+![image](https://user-images.githubusercontent.com/4129778/87724422-be13c580-c7bb-11ea-83a4-28faa99672bc.png)
 
 ## Install
 
 ```sh
-npm install --save cytoscape-overlaps
+npm install --save cytoscape cytoscape-layers cytoscape-overlaps
 ```
 
 ## Usage
 
-TODO
+```js
+const cy = cytoscape({
+  container: document.getElementById('app'),
+  elements: [
+    {
+      data: {
+        id: 'a',
+        value: Math.random(),
+        values: Array(100)
+          .fill(0)
+          .map(() => Math.random()),
+      },
+    },
+    {
+      data: {
+        id: 'b',
+        value: Math.random(),
+        values: Array(100)
+          .fill(0)
+          .map(() => Math.random()),
+      },
+    },
+    {
+      data: {
+        id: 'ab',
+        source: 'a',
+        target: 'b',
+      },
+    },
+  ],
+});
+cy.overlays(
+  [
+    {
+      position: 'above',
+      vis: CytoscapeOverlays.renderBar('value', {
+        backgroundColor: 'steelblue',
+      }),
+    },
+    {
+      vis: CytoscapeOverlays.renderBoxplot('values', {
+        backgroundColor: 'darkred',
+      }),
+    },
+    {
+      vis: CytoscapeOverlays.renderHistogram('values', {
+        backgroundColor: 'darkgreen',
+      }),
+    },
+  ],
+  {
+    updateOn: 'render',
+    backgroundColor: 'white',
+  }
+);
+```
 
 see [Samples](https://github.com/sgratzl/cytoscape.js-overlaps/tree/master/samples) on Github
 

@@ -41,13 +41,14 @@
     "@sgratzl/boxplots": "^1.0.0",
     "@types/cytoscape": "^3.14.7",
     "@types/seedrandom": "^2.4.28",
-    "cytoscape-layers": "^2.0.0",
     "seedrandom": "^3.0.5"
   },
   "peerDependencies": {
+    "cytoscape-layers": "^2.0.0",
     "cytoscape": "^3.15.2"
   },
   "devDependencies": {
+    "cytoscape-layers": "^2.0.0",
     "@rollup/plugin-commonjs": "^14.0.0",
     "@types/d3-array": "^1.2.4",
     "@types/jest": "^26.0.4",

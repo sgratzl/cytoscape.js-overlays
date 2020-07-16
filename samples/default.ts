@@ -1,6 +1,6 @@
 namespace DefaultNS {
   declare const cytoscape: typeof import('cytoscape');
-  declare const CytoscapeLayers: typeof import('cytoscape-layers');
+  // declare const CytoscapeLayers: typeof import('cytoscape-layers');
   declare const CytoscapeOverlays: typeof import('../dist');
   declare const cytoscapeSbgnStylesheet: any;
 
@@ -36,10 +36,16 @@ namespace DefaultNS {
             backgroundColor: 'darkred',
           }),
         },
+        {
+          vis: CytoscapeOverlays.renderHistogram('annotationArray', {
+            backgroundColor: 'darkgreen',
+          }),
+        },
       ],
       {
         selector: '[class="macromolecule"]',
         updateOn: 'render',
+        backgroundColor: '#f6f6f6',
       }
     );
   });

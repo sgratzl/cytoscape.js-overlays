@@ -10,14 +10,19 @@ export interface IBarOptions {
 /**
  * @internal
  */
-export const defaultBarOptions: IBarOptions = {
-  scale: [0, 1],
+export const defaultColorOptions = {
   backgroundColor: '#cccccc',
   borderColor: '#a0a0a0',
 };
 
 export function renderBar(attr: IAttrAccessor<number>, options: Partial<IBarOptions> = {}): IVisualization {
-  const o = Object.assign({}, defaultBarOptions, options);
+  const o = Object.assign(
+    {
+      scale: [0, 1],
+    },
+    defaultColorOptions,
+    options
+  );
   const acc = resolveAccessor(attr);
   const scale = resolveScale(o.scale);
 

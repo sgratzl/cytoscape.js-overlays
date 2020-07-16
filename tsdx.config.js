@@ -17,7 +17,7 @@ module.exports = {
     config.output.globals['cytoscape'] = 'cytoscape';
 
     const originalExternal = config.external;
-    const external = Object.keys(pkg.dependencies || {}).concat(Object.keys(pkg.peerDependencies || {}));
+    const external = ['cytoscape-layers']; // Object.keys(pkg.dependencies || {}).concat(Object.keys(pkg.peerDependencies || {}));
     config.external = (v) => (originalExternal(v) ? external.includes(v) : false);
 
     const c = config.plugins.findIndex((d) => d.name === 'commonjs');

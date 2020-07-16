@@ -1806,6 +1806,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/d3-array@npm:^1.2.4":
+  version: 1.2.7
+  resolution: "@types/d3-array@npm:1.2.7"
+  checksum: 98a8bd83e475426b020ae3e5f4177c4d4b06ea036ccc73868d553c2bfc1ef316689fca4e34a8632a094eb01e41ea7e1b70f35dce9a90f05a809f0e7fd9779a91
+  languageName: node
+  linkType: hard
+
 "@types/emscripten@npm:^1.38.0":
   version: 1.39.4
   resolution: "@types/emscripten@npm:1.39.4"
@@ -3721,6 +3728,7 @@ __metadata:
     "@rollup/plugin-commonjs": ^14.0.0
     "@sgratzl/boxplots": ^1.0.0
     "@types/cytoscape": ^3.14.7
+    "@types/d3-array": ^1.2.4
     "@types/jest": ^26.0.4
     "@types/seedrandom": ^2.4.28
     "@typescript-eslint/eslint-plugin": ^3.6.1
@@ -3728,6 +3736,7 @@ __metadata:
     "@yarnpkg/pnpify": ^2.1.0
     cytoscape: ^3.15.2
     cytoscape-layers: ^2.0.0
+    d3-array: ^1.2.4
     eslint: ^7.4.0
     eslint-config-prettier: ^6.11.0
     eslint-config-react-app: ^5.2.1
@@ -3761,6 +3770,13 @@ __metadata:
     heap: ^0.2.6
     lodash.debounce: ^4.0.8
   checksum: e1cdfb8eff6104569d513ac86a8923e6f590f9fb247db7513d482d0f70938702436e1a80f12c46f43bd8feda97e176e9c12196ac57362f557cc5dd33883382de
+  languageName: node
+  linkType: hard
+
+"d3-array@npm:^1.2.4":
+  version: 1.2.4
+  resolution: "d3-array@npm:1.2.4"
+  checksum: ab114c72ccdcb3f53807574c003816ad6ac65c2c2db2b17b18e2678f1141881dfa0ddab60af63d73e428c826e4580b6cb9e93cb776c777c79fec9f75057d8fbd
   languageName: node
   linkType: hard
 

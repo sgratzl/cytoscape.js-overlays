@@ -1,7 +1,7 @@
 import { IAttrAccessor, IVisualization, IDimension } from './interfaces';
 import { resolveAccessor, resolveScale } from './utils';
 import { IBoxPlot, boxplot, BoxplotStatsOptions } from '@sgratzl/boxplots';
-import { IBarOptions, defaultBarOptions } from './bar';
+import { IBarOptions, defaultColorOptions } from './bar';
 // import seedrandom from 'seedrandom';
 
 export interface IBoxplotOptions extends BoxplotStatsOptions, IBarOptions {
@@ -14,7 +14,8 @@ export interface IBoxplotOptions extends BoxplotStatsOptions, IBarOptions {
 }
 
 const defaultOptions: IBoxplotOptions = {
-  ...defaultBarOptions,
+  scale: [0, 1],
+  ...defaultColorOptions,
 
   outlierRadius: 2,
   get outlierBackgroundColor() {

@@ -11,6 +11,7 @@ export interface IOverlayVisualization {
 export interface IOverlayPluginOptions extends ICanvasLayerOptions, INodeLayerOption {
   layer: ICanvasLayer;
   backgroundColor: string;
+  padding: number;
 }
 
 function isAbove(d: IOverlayVisualization) {
@@ -28,10 +29,11 @@ export function overlays(
 ): { remove(): void } {
   const layer = options.layer || layers(this).nodeLayer.insertAfter('canvas', options);
 
+  const padding = options.padding == null ? 1 : options.padding;
   const above = overlays.filter(isAbove);
-  const aboveHeight = above.reduce((acc, overlay) => acc + getHeight(overlay), 0);
+  const aboveHeight = above.reduce((acc, overlay) => acc + getHeight(overlay) + padding, -padding);
   const below = overlays.filter((d) => !isAbove(d));
-  const belowHeight = below.reduce((acc, overlay) => acc + getHeight(overlay), 0);
+  const belowHeight = below.reduce((acc, overlay) => acc + getHeight(overlay) + padding, -padding);
 
   return renderPerNode(
     layer,
@@ -52,13 +54,14 @@ export function overlays(
         const height = getHeight(overlay);
         ctx.translate(0, -height);
         overlay.vis(ctx, node, { width: bb.w, height });
+        ctx.translate(0, -padding);
       }
       ctx.setTransform(bak);
       ctx.translate(0, bb.h);
       for (const overlay of below) {
         const height = getHeight(overlay);
         overlay.vis(ctx, node, { width: bb.w, height });
-        ctx.translate(0, height);
+        ctx.translate(0, height + padding);
       }
     },
     Object.assign(

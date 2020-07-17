@@ -61,8 +61,8 @@ export function renderHistogram(
 
     let offset = 0;
     for (const bin of hist) {
-      const y = yScale(bin);
-      ctx.fillRect(offset, y, binWidth, dim.height - y);
+      const height = yScale(bin);
+      ctx.fillRect(offset, dim.height - height, binWidth, height);
       offset += binWidth + o.barPadding;
     }
   };

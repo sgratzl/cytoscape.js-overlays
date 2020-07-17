@@ -63,11 +63,9 @@ namespace AllNS {
   CytoscapeOverlays.overlays.call(
     cy,
     [
-      {
-        vis: CytoscapeOverlays.renderBar('value', {
-          backgroundColor: 'steelblue',
-        }),
-      },
+      CytoscapeOverlays.renderBar('value', {
+        backgroundColor: 'steelblue',
+      }),
     ],
     {
       layer,
@@ -77,11 +75,9 @@ namespace AllNS {
   CytoscapeOverlays.overlays.call(
     cy,
     [
-      {
-        vis: CytoscapeOverlays.renderHistogram('values', {
-          backgroundColor: 'steelblue',
-        }),
-      },
+      CytoscapeOverlays.renderHistogram('values', {
+        backgroundColor: 'steelblue',
+      }),
     ],
     {
       layer,
@@ -91,11 +87,9 @@ namespace AllNS {
   CytoscapeOverlays.overlays.call(
     cy,
     [
-      {
-        vis: CytoscapeOverlays.renderBoxplot('values', {
-          backgroundColor: 'steelblue',
-        }),
-      },
+      CytoscapeOverlays.renderBoxplot('values', {
+        backgroundColor: 'steelblue',
+      }),
     ],
     {
       layer,
@@ -105,27 +99,17 @@ namespace AllNS {
   CytoscapeOverlays.overlays.call(
     cy,
     [
-      {
-        vis: CytoscapeOverlays.renderSparkLine('values', {
-          lineColor: 'steelblue',
-        }),
-      },
+      CytoscapeOverlays.renderSparkLine('values', {
+        lineColor: 'steelblue',
+      }),
     ],
     {
       layer,
       selector: '#sparkline',
     }
   );
-  CytoscapeOverlays.overlays.call(
-    cy,
-    [
-      {
-        vis: CytoscapeOverlays.renderBinarySparkLine('values', {}),
-      },
-    ],
-    {
-      layer,
-      selector: '#binarySparkLine',
-    }
-  );
+  CytoscapeOverlays.overlays.call(cy, [CytoscapeOverlays.renderBinarySparkLine('values', {})], {
+    layer,
+    selector: '#binarySparkLine',
+  });
 }

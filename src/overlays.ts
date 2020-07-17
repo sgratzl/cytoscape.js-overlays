@@ -24,15 +24,17 @@ function getHeight(v: IOverlayVisualization) {
 
 export function overlays(
   this: cy.Core,
-  overlays: readonly IOverlayVisualization[],
+  overlays: readonly (IOverlayVisualization | IVisualization)[],
   options: Partial<IOverlayPluginOptions> = {}
 ): { remove(): void } {
   const layer = options.layer || layers(this).nodeLayer.insertAfter('canvas', options);
 
+  const overlayObjects = overlays.map((o) => (typeof o === 'function' ? { vis: o } : o));
+
   const padding = options.padding == null ? 1 : options.padding;
-  const above = overlays.filter(isAbove);
+  const above = overlayObjects.filter(isAbove);
   const aboveHeight = above.reduce((acc, overlay) => acc + getHeight(overlay) + padding, -padding);
-  const below = overlays.filter((d) => !isAbove(d));
+  const below = overlayObjects.filter((d) => !isAbove(d));
   const belowHeight = below.reduce((acc, overlay) => acc + getHeight(overlay) + padding, -padding);
 
   return renderPerNode(

@@ -22,24 +22,18 @@
       const cy = cytoscape({
         container: document.getElementById('app'),
         elements: [
-          {
+          ...['a', 'b'].map((id) => ({
             data: {
-              id: 'a',
+              id,
               value: Math.random(),
               values: Array(100)
                 .fill(0)
                 .map(() => Math.random()),
-            },
-          },
-          {
-            data: {
-              id: 'b',
-              value: Math.random(),
-              values: Array(100)
+              line: Array(10)
                 .fill(0)
                 .map(() => Math.random()),
             },
-          },
+          })),
           {
             data: {
               id: 'ab',
@@ -64,6 +58,11 @@
           },
           {
             vis: CytoscapeOverlays.renderHistogram('values', {
+              backgroundColor: 'darkgreen',
+            }),
+          },
+          {
+            vis: CytoscapeOverlays.renderSparkLine('line', {
               backgroundColor: 'darkgreen',
             }),
           },

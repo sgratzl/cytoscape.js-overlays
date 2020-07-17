@@ -1,5 +1,5 @@
-import { IAttrAccessor, IVisualization } from './interfaces';
-import { resolveAccessor } from './utils';
+import { IAttrAccessor, IVisualization, INodeFunction } from './interfaces';
+import { resolveAccessor, resolveFunction } from './utils';
 import { defaultColorOptions } from './bar';
 import { histogram } from 'd3-array';
 
@@ -12,8 +12,8 @@ function isHist(value: readonly number[] | IHist): value is IHist {
 }
 export interface IHistogramOptions {
   scale: [number, number];
-  backgroundColor: string;
-  borderColor: string;
+  backgroundColor: INodeFunction<string>;
+  borderColor: INodeFunction<string>;
   barPadding: number;
 }
 
@@ -40,6 +40,8 @@ export function renderHistogram(
     options
   );
   const acc = resolveAccessor(attr);
+  const backgroundColor = resolveFunction(o.backgroundColor);
+  const borderColor = resolveFunction(o.borderColor);
 
   const r: IVisualization = (ctx, node, dim) => {
     const value = acc(node);
@@ -49,8 +51,8 @@ export function renderHistogram(
     }
     const hist = generateHist(value, o);
 
-    ctx.fillStyle = o.backgroundColor;
-    ctx.strokeStyle = o.borderColor;
+    ctx.fillStyle = backgroundColor(node);
+    ctx.strokeStyle = borderColor(node);
 
     const binWidth = (dim.width - (hist.length - 1) * o.barPadding) / hist.length;
     const maxBin = hist.reduce((acc, v) => Math.max(acc, v), 0);

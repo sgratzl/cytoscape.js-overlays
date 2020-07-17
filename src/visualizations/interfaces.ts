@@ -14,3 +14,5 @@ export interface IVisualization {
 export declare type IAttrAccessor<T> = string | ((v: cy.NodeSingular) => T | null);
 
 export declare type IScale = [number, number] | ((v: number) => number);
+
+export declare type INodeFunction<T extends string | number | boolean> = T | ((v: cy.NodeSingular) => T);

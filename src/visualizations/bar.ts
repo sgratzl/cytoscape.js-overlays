@@ -1,10 +1,10 @@
-import { IAttrAccessor, IScale, IVisualization } from './interfaces';
-import { resolveAccessor, resolveScale } from './utils';
+import { IAttrAccessor, IScale, IVisualization, INodeFunction } from './interfaces';
+import { resolveAccessor, resolveScale, resolveFunction } from './utils';
 
 export interface IBarOptions {
   scale: IScale;
-  backgroundColor: string;
-  borderColor: string;
+  backgroundColor: INodeFunction<string>;
+  borderColor: INodeFunction<string>;
 }
 
 /**
@@ -25,18 +25,21 @@ export function renderBar(attr: IAttrAccessor<number>, options: Partial<IBarOpti
   );
   const acc = resolveAccessor(attr);
   const scale = resolveScale(o.scale);
+  const backgroundColor = resolveFunction(o.backgroundColor);
+  const borderColor = resolveFunction(o.borderColor);
 
   const r: IVisualization = (ctx, node, dim) => {
     const value = acc(node);
 
     if (value != null && !Number.isNaN(value)) {
-      ctx.fillStyle = o.backgroundColor;
+      ctx.fillStyle = backgroundColor(node);
       const v = scale(value);
       ctx.fillRect(0, 0, dim.width * v, dim.height);
     }
 
-    if (o.borderColor) {
-      ctx.strokeStyle = o.borderColor;
+    const b = borderColor(node);
+    if (b) {
+      ctx.strokeStyle = b;
       ctx.strokeRect(0, 0, dim.width, dim.height);
     }
   };

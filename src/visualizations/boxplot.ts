@@ -1,14 +1,15 @@
-import { IAttrAccessor, IVisualization, IDimension } from './interfaces';
-import { resolveAccessor, resolveScale } from './utils';
+import { IAttrAccessor, IVisualization, IDimension, INodeFunction } from './interfaces';
+import { resolveAccessor, resolveScale, resolveFunction } from './utils';
 import { IBoxPlot, boxplot, BoxplotStatsOptions } from '@sgratzl/boxplots';
 import { IBarOptions, defaultColorOptions } from './bar';
+import cy from 'cytoscape';
 // import seedrandom from 'seedrandom';
 
 export interface IBoxplotOptions extends BoxplotStatsOptions, IBarOptions {
   outlierRadius: number;
-  outlierBackgroundColor: string;
+  outlierBackgroundColor: INodeFunction<string>;
   itemRadius: number;
-  itemBackgroundColor: string;
+  itemBackgroundColor: INodeFunction<string>;
 
   boxPadding: number;
 }
@@ -81,7 +82,7 @@ export function renderBoxplot(
     //   );
     // }
 
-    renderBoxplotImpl(ctx, o, scale, b, dim);
+    renderBoxplotImpl(ctx, node, o, scale, b, dim);
   };
   r.defaultHeight = 10;
   r.defaultPosition = 'below';
@@ -90,13 +91,14 @@ export function renderBoxplot(
 
 function renderBoxplotImpl(
   ctx: CanvasRenderingContext2D,
+  node: cy.NodeSingular,
   o: IBoxplotOptions,
   scale: (v: number) => number,
   b: IBoxPlot,
   dim: IDimension
 ) {
-  ctx.strokeStyle = o.borderColor;
-  ctx.fillStyle = o.backgroundColor;
+  ctx.strokeStyle = resolveFunction(o.borderColor)(node);
+  ctx.fillStyle = resolveFunction(o.backgroundColor)(node);
 
   // draw box
   const q1 = scale(b.q1);
@@ -130,7 +132,7 @@ function renderBoxplotImpl(
   ctx.stroke();
 
   if (o.outlierRadius > 0 && b.outlier.length > 0) {
-    ctx.fillStyle = o.outlierBackgroundColor;
+    ctx.fillStyle = resolveFunction(o.outlierBackgroundColor)(node);
     renderPoints(
       ctx,
       b.outlier,

@@ -1,11 +1,11 @@
-import { IAttrAccessor, IVisualization, IScale } from './interfaces';
-import { resolveAccessor, resolveScale } from './utils';
+import { IAttrAccessor, IVisualization, IScale, INodeFunction } from './interfaces';
+import { resolveAccessor, resolveScale, resolveFunction } from './utils';
 import { defaultColorOptions } from './bar';
 
 export interface ISparkLineOptions {
   scale: IScale;
-  backgroundColor: string;
-  lineColor: string;
+  backgroundColor: INodeFunction<string>;
+  lineColor: INodeFunction<string>;
   padding: number;
 }
 
@@ -24,6 +24,8 @@ export function renderSparkLine(
   );
   const acc = resolveAccessor(attr);
   const yScale01 = resolveScale(o.scale);
+  const backgroundColor = resolveFunction(o.backgroundColor);
+  const lineColor = resolveFunction(o.lineColor);
 
   const r: IVisualization = (ctx, node, dim) => {
     const value = acc(node);
@@ -36,8 +38,9 @@ export function renderSparkLine(
     const xScale = (i: number) => i * step + o.padding;
     const yScale = (v: number) => (1 - yScale01(v)) * dim.height;
 
-    if (o.backgroundColor) {
-      ctx.fillStyle = o.backgroundColor;
+    const bg = backgroundColor(node);
+    if (bg) {
+      ctx.fillStyle = bg;
       ctx.beginPath();
       let first = true;
       let lastIndex: number | null = null;
@@ -62,8 +65,9 @@ export function renderSparkLine(
       ctx.fill();
     }
 
-    if (o.lineColor) {
-      ctx.strokeStyle = o.lineColor;
+    const lc = lineColor(node);
+    if (lc) {
+      ctx.strokeStyle = lc;
       ctx.lineCap = 'round';
       ctx.beginPath();
       let first = true;

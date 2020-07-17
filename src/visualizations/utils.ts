@@ -1,4 +1,4 @@
-import { IAttrAccessor, IScale } from './interfaces';
+import { IAttrAccessor, IScale, INodeFunction } from './interfaces';
 import cy from 'cytoscape';
 
 export function resolveAccessor<T>(attr: IAttrAccessor<T>): (v: cy.NodeSingular) => T | null {
@@ -12,4 +12,8 @@ export function resolveScale(scale: IScale): (v: number) => number {
   const range = scale[1] - scale[0];
   const min = scale[0];
   return (v) => (v - min) / range;
+}
+
+export function resolveFunction<T extends string | number | boolean>(f: INodeFunction<T>): (v: cy.NodeSingular) => T {
+  return typeof f === 'function' ? f : () => f as T;
 }

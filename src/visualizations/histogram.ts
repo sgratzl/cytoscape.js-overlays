@@ -45,6 +45,8 @@ export function renderHistogram(
 
   const r: IVisualization = (ctx, node, dim) => {
     const value = acc(node);
+    ctx.strokeStyle = borderColor(node);
+    ctx.strokeRect(0, 0, dim.width, dim.height);
 
     if (value == null || !Array.isArray(value)) {
       return;
@@ -52,7 +54,6 @@ export function renderHistogram(
     const hist = generateHist(value, o);
 
     ctx.fillStyle = backgroundColor(node);
-    ctx.strokeStyle = borderColor(node);
 
     const binWidth = (dim.width - (hist.length - 1) * o.barPadding) / hist.length;
     const maxBin = hist.reduce((acc, v) => Math.max(acc, v), 0);
@@ -64,8 +65,6 @@ export function renderHistogram(
       ctx.fillRect(offset, y, binWidth, dim.height - y);
       offset += binWidth + o.barPadding;
     }
-
-    ctx.strokeRect(0, 0, dim.width, dim.height);
   };
   r.defaultHeight = 20;
   r.defaultPosition = 'below';

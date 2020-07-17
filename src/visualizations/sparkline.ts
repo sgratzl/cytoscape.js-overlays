@@ -1,11 +1,13 @@
 import { IAttrAccessor, IVisualization, IScale, INodeFunction } from './interfaces';
 import { resolveAccessor, resolveScale, resolveFunction } from './utils';
 import { defaultColorOptions } from './bar';
+import { renderLine, renderArea } from './lineUtils';
 
 export interface ISparkLineOptions {
   scale: IScale;
   backgroundColor: INodeFunction<string>;
   lineColor: INodeFunction<string>;
+  borderColor: INodeFunction<string>;
   padding: number;
 }
 
@@ -18,6 +20,7 @@ export function renderSparkLine(
       scale: [0, 1],
       backgroundColor: '',
       padding: 1,
+      borderColor: defaultColorOptions.borderColor,
       lineColor: defaultColorOptions.borderColor,
     },
     options
@@ -26,9 +29,16 @@ export function renderSparkLine(
   const yScale01 = resolveScale(o.scale);
   const backgroundColor = resolveFunction(o.backgroundColor);
   const lineColor = resolveFunction(o.lineColor);
+  const borderColor = resolveFunction(o.borderColor);
 
   const r: IVisualization = (ctx, node, dim) => {
     const value = acc(node);
+
+    const bc = borderColor(node);
+    if (bc) {
+      ctx.strokeStyle = bc;
+      ctx.strokeRect(0, 0, dim.width, dim.height);
+    }
 
     if (value == null || !Array.isArray(value) || value.length === 0) {
       return;
@@ -38,52 +48,19 @@ export function renderSparkLine(
     const xScale = (i: number) => i * step + o.padding;
     const yScale = (v: number) => (1 - yScale01(v)) * dim.height;
 
+    const values = value.map((y, x) => ({ x, y }));
+
     const bg = backgroundColor(node);
     if (bg) {
       ctx.fillStyle = bg;
-      ctx.beginPath();
-      let first = true;
-      let lastIndex: number | null = null;
-      for (let i = 0; i < value.length; i++) {
-        const v = value[i];
-        if (v == null || Number.isNaN(v)) {
-          continue;
-        }
-        lastIndex = i;
-        if (first) {
-          ctx.moveTo(xScale(i), dim.height);
-          ctx.lineTo(xScale(i), yScale(v));
-          first = false;
-        } else {
-          ctx.lineTo(xScale(i), yScale(v));
-        }
-      }
-      if (lastIndex != null) {
-        ctx.lineTo(xScale(lastIndex), dim.height);
-        ctx.closePath();
-      }
-      ctx.fill();
+      renderArea(ctx, values, xScale, yScale, dim.height);
     }
 
     const lc = lineColor(node);
     if (lc) {
-      ctx.strokeStyle = lc;
       ctx.lineCap = 'round';
-      ctx.beginPath();
-      let first = true;
-      for (let i = 0; i < value.length; i++) {
-        const v = value[i];
-        if (v == null || Number.isNaN(v)) {
-          continue;
-        }
-        if (first) {
-          ctx.moveTo(xScale(i), yScale(v));
-          first = false;
-        } else {
-          ctx.lineTo(xScale(i), yScale(v));
-        }
-      }
-      ctx.stroke();
+      ctx.strokeStyle = lc;
+      renderLine(ctx, values, xScale, yScale);
     }
   };
 

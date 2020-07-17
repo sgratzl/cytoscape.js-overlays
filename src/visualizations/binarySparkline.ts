@@ -23,19 +23,19 @@ function lineSplit(x1: number, y1: number, x2: number, y2: number, centerValue: 
 }
 
 function splitSegments(values: readonly number[], centerValue: number) {
-  const above: { x: number; y: number }[] = [];
   const below: { x: number; y: number }[] = [];
+  const above: { x: number; y: number }[] = [];
 
   let previousIndex: number | null = null;
   for (let i = 0; i < values.length; i++) {
     const v = values[i];
     if (v == null || Number.isNaN(v)) {
       previousIndex = null;
-      if (above.length > 0 && !Number.isNaN(above[above.length - 1].y)) {
-        above.push({ x: i, y: Number.NaN });
-      }
       if (below.length > 0 && !Number.isNaN(below[below.length - 1].y)) {
         below.push({ x: i, y: Number.NaN });
+      }
+      if (above.length > 0 && !Number.isNaN(above[above.length - 1].y)) {
+        above.push({ x: i, y: Number.NaN });
       }
       continue;
     }
@@ -43,14 +43,14 @@ function splitSegments(values: readonly number[], centerValue: number) {
     if (previousIndex != null && values[previousIndex] < centerValue !== v < centerValue) {
       // crossed the line
       const xc = lineSplit(previousIndex, values[previousIndex], i, v, centerValue);
-      above.push({ x: xc, y: centerValue });
       below.push({ x: xc, y: centerValue });
+      above.push({ x: xc, y: centerValue });
     }
 
     if (v < centerValue) {
-      above.push({ x: i, y: v });
-    } else {
       below.push({ x: i, y: v });
+    } else {
+      above.push({ x: i, y: v });
     }
 
     previousIndex = i;
@@ -72,7 +72,7 @@ export function renderBinarySparkLine(
       aboveLineColor: '',
       belowLineColor: '',
       borderColor: defaultColorOptions.borderColor,
-      centerValueColor: defaultColorOptions.borderColor,
+      centerValueColor: '',
       padding: 1,
     },
     options

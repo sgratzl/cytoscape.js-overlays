@@ -31,4 +31,4 @@ export declare type IAttrAccessor<T> = string | ((v: cy.NodeSingular) => T | nul
 
 export declare type IScale = [number, number] | ((v: number) => number);
 
-export declare type INodeFunction<T extends string | number | boolean> = T | ((v: cy.NodeSingular) => T);
+export declare type INodeFunction<T> = T | ((v: cy.NodeSingular) => T);

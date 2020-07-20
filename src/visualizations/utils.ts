@@ -14,8 +14,8 @@ export function resolveScale(scale: IScale): (v: number) => number {
   return (v) => (v - min) / range;
 }
 
-export function resolveFunction<T extends string | number | boolean>(f: INodeFunction<T>): (v: cy.NodeSingular) => T {
-  return typeof f === 'function' ? f : () => f as T;
+export function resolveFunction<T>(f: INodeFunction<T>): (v: cy.NodeSingular) => T {
+  return typeof f === 'function' ? (f as (v: cy.NodeSingular) => T) : () => f as T;
 }
 
 export function autoResolveScale(scale: IScale, values: () => (number | null)[]) {

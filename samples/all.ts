@@ -47,6 +47,11 @@ namespace AllNS {
             .map(() => Math.random() * 2 - 1),
         },
       },
+      {
+        data: {
+          id: 'symbols',
+        },
+      },
     ],
     style: [
       {
@@ -65,7 +70,15 @@ namespace AllNS {
     [
       CytoscapeOverlays.renderBar('value', {
         backgroundColor: 'steelblue',
+        scale: [0, 1],
       }),
+      {
+        vis: CytoscapeOverlays.renderBar('value', {
+          backgroundColor: 'steelblue',
+          scale: [0, 1],
+        }),
+        position: 'right',
+      },
     ],
     {
       layer,
@@ -112,4 +125,35 @@ namespace AllNS {
     layer,
     selector: '#binarySparkLine',
   });
+  CytoscapeOverlays.overlays.call(
+    cy,
+    [
+      {
+        vis: CytoscapeOverlays.renderSymbol({
+          symbol: 'circle',
+        }),
+        position: 'top-left',
+      },
+      {
+        vis: CytoscapeOverlays.renderSymbol({
+          symbol: 'diamond',
+        }),
+        position: 'top-right',
+      },
+      {
+        vis: CytoscapeOverlays.renderSymbol({}),
+        position: 'bottom-left',
+      },
+      {
+        vis: CytoscapeOverlays.renderSymbol({
+          symbol: 'star',
+        }),
+        position: 'bottom-right',
+      },
+    ],
+    {
+      layer,
+      selector: '#symbols',
+    }
+  );
 }

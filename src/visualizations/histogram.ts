@@ -67,6 +67,6 @@ export function renderHistogram(
     }
   };
   r.defaultHeight = 20;
-  r.defaultPosition = 'below';
+  r.defaultPosition = 'bottom';
   return r;
 }

@@ -18,7 +18,7 @@ export interface IDimension {
 }
 
 export interface IVisualization {
-  init?: (node: cy.NodeCollection) => void;
+  init?: (nodes: cy.NodeCollection) => void;
 
   (ctx: CanvasRenderingContext2D, node: cy.NodeSingular, dim: IDimension): void;
 

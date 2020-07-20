@@ -22,7 +22,7 @@ export function autoResolveScale(scale: IScale, values: () => (number | null)[])
   if (typeof scale === 'function') {
     return scale;
   }
-  if (!Number.isNaN(scale[0]) && Number.isNaN(scale[1])) {
+  if (!Number.isNaN(scale[0]) && !Number.isNaN(scale[1])) {
     return resolveScale(scale);
   }
   // determine min max

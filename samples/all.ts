@@ -141,12 +141,16 @@ namespace AllNS {
         position: 'top-right',
       },
       {
-        vis: CytoscapeOverlays.renderSymbol({}),
+        vis: CytoscapeOverlays.renderSymbol({
+          symbol: 'cross',
+        }),
         position: 'bottom-left',
       },
       {
         vis: CytoscapeOverlays.renderSymbol({
-          symbol: 'star',
+          symbol: {
+            text: '😀',
+          },
         }),
         position: 'bottom-right',
       },

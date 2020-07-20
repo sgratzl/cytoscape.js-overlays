@@ -27,8 +27,8 @@ export interface ITextSymbol {
 }
 
 export interface ISymbolOptions {
-  symbol: INodeFunction<keyof typeof symbols | CanvasImageSource | SymbolType | ITextSymbol>;
-  color: INodeFunction<string>;
+  symbol: INodeFunction<keyof typeof symbols | CanvasImageSource | SymbolType | ITextSymbol | null>;
+  color: INodeFunction<string | null>;
 }
 
 function isSymbol(s: any): s is SymbolType {
@@ -51,8 +51,13 @@ export function renderSymbol(options: Partial<ISymbolOptions> = {}): IVisualizat
   const backgroundColor = resolveFunction(o.color);
 
   const r: IVisualization = (ctx, node, dim) => {
-    ctx.fillStyle = backgroundColor(node);
+    const bg = backgroundColor(node);
     const s = symbol(node);
+
+    if (bg == null || s == null) {
+      return;
+    }
+    ctx.fillStyle = bg;
 
     if (isSymbol(s) || typeof s === 'string') {
       const sym = isSymbol(s) ? s : symbols[s as keyof typeof symbols] || symbolCircle;

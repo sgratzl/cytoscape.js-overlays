@@ -2,10 +2,10 @@
 
 [![License: MIT][mit-image]][mit-url] [![NPM Package][npm-image]][npm-url] [![Github Actions][github-actions-image]][github-actions-url]
 
-A [Cytoscape.js](https://js.cytoscape.org) plugin for adding layers that shows bars, histograms, sparklines, binary sparklines, or boxplots next to nodes.
+A [Cytoscape.js](https://js.cytoscape.org) plugin for adding layers that shows bars, histograms, sparklines, binary sparklines, symbols (categorical data), or boxplots next to nodes.
 Great for showing numerical attributes such as experimental data of pathways nodes.
 
-![image](https://user-images.githubusercontent.com/4129778/87823419-997b2480-c873-11ea-8b61-d675ec415773.png)
+![image](https://user-images.githubusercontent.com/4129778/87938105-5220ae00-ca96-11ea-839a-0321990d2171.png)
 
 ## Install
 
@@ -49,7 +49,7 @@ const cy = cytoscape({
 cy.overlays(
   [
     {
-      position: 'above',
+      position: 'top',
       vis: CytoscapeOverlays.renderBar('value', {
         backgroundColor: 'steelblue',
       }),

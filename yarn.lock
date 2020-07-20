@@ -1680,10 +1680,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sgratzl/boxplots@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@sgratzl/boxplots@npm:1.0.0"
-  checksum: c12ef0c7201a48e4eba4b611c9d71c983916149337603fb83ba84a9a4d12eeb985ab69e92c8d58b66fb2b805bc1c9cd990044378d7bc06c7a229bf158ef09390
+"@sgratzl/boxplots@npm:^1.2.0":
+  version: 1.2.1
+  resolution: "@sgratzl/boxplots@npm:1.2.1"
+  checksum: c01aa25f9b23c3f50ed24491d9c37690bd055a9688c3a9e600f310d2b73e27fc0b1d57c3128fe93bf79355e1a4eb2f7e520c1364edb22442b28c971720e4d412
   languageName: node
   linkType: hard
 
@@ -1810,6 +1810,22 @@ __metadata:
   version: 1.2.7
   resolution: "@types/d3-array@npm:1.2.7"
   checksum: 98a8bd83e475426b020ae3e5f4177c4d4b06ea036ccc73868d553c2bfc1ef316689fca4e34a8632a094eb01e41ea7e1b70f35dce9a90f05a809f0e7fd9779a91
+  languageName: node
+  linkType: hard
+
+"@types/d3-path@npm:*":
+  version: 1.0.8
+  resolution: "@types/d3-path@npm:1.0.8"
+  checksum: e967ea9b8472495469f58aafdf027fe1ae09f9ef0e110b87f15d3ab720d6979ac88175268e0fa1e67fab886913b4987a9927a87f6a20fb95cd59e2a2ec6196f2
+  languageName: node
+  linkType: hard
+
+"@types/d3-shape@npm:^1.3.2":
+  version: 1.3.2
+  resolution: "@types/d3-shape@npm:1.3.2"
+  dependencies:
+    "@types/d3-path": "*"
+  checksum: 3f6c582dfd23274c9c0db2dd972f23a4a53f1b13f1fb1193831a56cfb882df417fa40264c906da9269e97416d85a346e065f40e71616c2b3b181d3a345eab813
   languageName: node
   linkType: hard
 
@@ -3726,9 +3742,10 @@ __metadata:
   resolution: "cytoscape-overlays@workspace:."
   dependencies:
     "@rollup/plugin-commonjs": ^14.0.0
-    "@sgratzl/boxplots": ^1.0.0
+    "@sgratzl/boxplots": ^1.2.0
     "@types/cytoscape": ^3.14.7
     "@types/d3-array": ^1.2.4
+    "@types/d3-shape": ^1.3.2
     "@types/jest": ^26.0.4
     "@types/seedrandom": ^2.4.28
     "@typescript-eslint/eslint-plugin": ^3.6.1
@@ -3737,6 +3754,7 @@ __metadata:
     cytoscape: ^3.15.2
     cytoscape-layers: ^2.0.0
     d3-array: ^1.2.4
+    d3-shape: ^1.3.7
     eslint: ^7.4.0
     eslint-config-prettier: ^6.11.0
     eslint-config-react-app: ^5.2.1
@@ -3778,6 +3796,22 @@ __metadata:
   version: 1.2.4
   resolution: "d3-array@npm:1.2.4"
   checksum: ab114c72ccdcb3f53807574c003816ad6ac65c2c2db2b17b18e2678f1141881dfa0ddab60af63d73e428c826e4580b6cb9e93cb776c777c79fec9f75057d8fbd
+  languageName: node
+  linkType: hard
+
+"d3-path@npm:1":
+  version: 1.0.9
+  resolution: "d3-path@npm:1.0.9"
+  checksum: 48492b1a4218bdfee93bed5bcb59f5e3ff6d3c66bffba82ddbb8e4007515ca517fc59b8ec7023c2387506ec25502ff7797f9a59274b6efec8b7652bc839a0be3
+  languageName: node
+  linkType: hard
+
+"d3-shape@npm:^1.3.7":
+  version: 1.3.7
+  resolution: "d3-shape@npm:1.3.7"
+  dependencies:
+    d3-path: 1
+  checksum: 90c1e7d773b3586da88f90bd5592d57eb5dade5b26088cddbb9828dd9f86c63f84c609b41051d695626c8acce21f041c61e189071939d45a2511585a87dd7151
   languageName: node
   linkType: hard
 

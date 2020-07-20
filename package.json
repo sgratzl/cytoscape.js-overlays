@@ -38,9 +38,11 @@
     "last 2 Firefox versions"
   ],
   "dependencies": {
-    "@sgratzl/boxplots": "^1.0.0",
+    "@sgratzl/boxplots": "^1.2.0",
     "@types/cytoscape": "^3.14.7",
+    "@types/d3-shape": "^1.3.2",
     "@types/seedrandom": "^2.4.28",
+    "d3-shape": "^1.3.7",
     "seedrandom": "^3.0.5"
   },
   "peerDependencies": {

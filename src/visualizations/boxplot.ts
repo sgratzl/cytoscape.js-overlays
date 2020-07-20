@@ -3,7 +3,7 @@ import { resolveAccessor, resolveScale, resolveFunction } from './utils';
 import { IBoxPlot, boxplot, BoxplotStatsOptions } from '@sgratzl/boxplots';
 import { IBarOptions, defaultColorOptions } from './bar';
 import cy from 'cytoscape';
-// import seedrandom from 'seedrandom';
+import seedrandom from 'seedrandom';
 
 export interface IBoxplotOptions extends BoxplotStatsOptions, IBarOptions {
   outlierRadius: number;
@@ -37,13 +37,13 @@ function renderPoints(
   x: (v: number) => number,
   y: (v: number) => number
 ) {
-  ctx.beginPath();
   for (const p of points) {
     const px = x(p);
     const py = y(p);
+    ctx.beginPath();
     ctx.arc(px, py, radius, 0, Math.PI * 2);
+    ctx.fill();
   }
-  ctx.fill();
 }
 
 export function renderBoxplot(
@@ -69,19 +69,6 @@ export function renderBoxplot(
       return;
     }
 
-    // if (o.itemRadius > 0 && b.items.length > 0) {
-    //   const rnd = seedrandom(node.id());
-    //   ctx.fillStyle = o.itemBackgroundColor;
-    //   const yDim = dim.height - o.itemRadius * 2;
-    //   renderPoints(
-    //     ctx,
-    //     b.outlier,
-    //     o.outlierRadius,
-    //     (v) => scale(v),
-    //     () => rnd() * yDim
-    //   );
-    // }
-
     renderBoxplotImpl(ctx, node, o, scale, b, dim);
   };
   r.defaultHeight = 10;
@@ -97,6 +84,19 @@ function renderBoxplotImpl(
   b: IBoxPlot,
   dim: IDimension
 ) {
+  if (o.itemRadius > 0 && b.items.length > 0) {
+    const rnd = seedrandom(node.id());
+    ctx.fillStyle = resolveFunction(o.itemBackgroundColor)(node);
+    const yDim = dim.height - o.itemRadius * 2;
+    renderPoints(
+      ctx,
+      Array.from(b.items),
+      o.itemRadius,
+      (v) => scale(v),
+      () => o.itemRadius + rnd() * yDim
+    );
+  }
+
   ctx.strokeStyle = resolveFunction(o.borderColor)(node);
   ctx.fillStyle = resolveFunction(o.backgroundColor)(node);
 

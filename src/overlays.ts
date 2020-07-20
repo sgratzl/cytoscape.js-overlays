@@ -1,25 +1,31 @@
 import cy from 'cytoscape';
-import { IVisualization } from './visualizations';
-import { layers, ICanvasLayer, ICanvasLayerOptions, renderPerNode, INodeLayerOption } from 'cytoscape-layers';
+import { IVisualization, OverlayPosition } from './visualizations';
+import { layers, ICanvasLayer, ICanvasLayerOptions, renderPerNode, INodeCanvasLayerOption } from 'cytoscape-layers';
 
 export interface IOverlayVisualization {
-  position?: 'above' | 'below';
+  position?: OverlayPosition;
+  width?: number;
   height?: number;
   vis: IVisualization;
 }
 
-export interface IOverlayPluginOptions extends ICanvasLayerOptions, INodeLayerOption {
+export interface IOverlayPluginOptions extends ICanvasLayerOptions, INodeCanvasLayerOption {
   layer: ICanvasLayer;
   backgroundColor: string;
   padding: number;
 }
 
-function isAbove(d: IOverlayVisualization) {
-  return d.position === 'above' || (d.position == null && d.vis.defaultPosition === 'above');
-}
-
-function getHeight(v: IOverlayVisualization) {
-  return v.height || v.vis.defaultHeight || 5;
+function toFullVisualization(o: IOverlayVisualization | IVisualization): Required<IOverlayVisualization> {
+  const vis = typeof o === 'function' ? o : o.vis;
+  return Object.assign(
+    {
+      vis,
+      height: vis.defaultHeight || 5,
+      width: vis.defaultWidth || 5,
+      position: vis.defaultPosition || 'bottom',
+    },
+    typeof o === 'function' ? { vis: o } : o
+  );
 }
 
 export function overlays(
@@ -29,13 +35,20 @@ export function overlays(
 ): { remove(): void } {
   const layer = options.layer || layers(this).nodeLayer.insertAfter('canvas', options);
 
-  const overlayObjects = overlays.map((o) => (typeof o === 'function' ? { vis: o } : o));
+  const overlayObjects = overlays.map(toFullVisualization);
 
   const padding = options.padding == null ? 1 : options.padding;
-  const above = overlayObjects.filter(isAbove);
-  const aboveHeight = above.reduce((acc, overlay) => acc + getHeight(overlay) + padding, -padding);
-  const below = overlayObjects.filter((d) => !isAbove(d));
-  const belowHeight = below.reduce((acc, overlay) => acc + getHeight(overlay) + padding, -padding);
+
+  const above = overlayObjects.filter((d) => d.position === 'above');
+  const aboveHeight = above.reduce((acc, overlay) => acc + overlay.height + padding, -padding);
+
+  const below = overlayObjects.filter((d) => d.position === 'below');
+  const belowHeight = below.reduce((acc, overlay) => acc + overlay.height + padding, -padding);
+
+  const above = overlayObjects.filter((d) => d.position === 'above');
+  const aboveHeight = above.reduce((acc, overlay) => acc + overlay.height + padding, -padding);
+  const below = overlayObjects.filter((d) => d.position === 'below');
+  const belowHeight = below.reduce((acc, overlay) => acc + overlay.height + padding, -padding);
 
   return renderPerNode(
     layer,

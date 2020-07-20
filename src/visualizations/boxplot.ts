@@ -1,5 +1,5 @@
 import { IAttrAccessor, IVisualization, IDimension, INodeFunction } from './interfaces';
-import { resolveAccessor, resolveScale, resolveFunction } from './utils';
+import { resolveAccessor, resolveScale, resolveFunction, autoResolveScale } from './utils';
 import { IBoxPlot, boxplot, BoxplotStatsOptions } from '@sgratzl/boxplots';
 import { IBarOptions, defaultColorOptions } from './bar';
 import cy from 'cytoscape';
@@ -15,7 +15,7 @@ export interface IBoxplotOptions extends BoxplotStatsOptions, IBarOptions {
 }
 
 const defaultOptions: IBoxplotOptions = {
-  scale: [0, 1],
+  scale: [0, Number.NaN],
   ...defaultColorOptions,
 
   outlierRadius: 2,
@@ -52,7 +52,7 @@ export function renderBoxplot(
 ): IVisualization {
   const o = Object.assign({}, defaultOptions, options);
   const acc = resolveAccessor(attr);
-  const scale01 = resolveScale(o.scale);
+  let scale01 = resolveScale(o.scale);
 
   const r: IVisualization = (ctx, node, dim) => {
     const value = acc(node);
@@ -71,8 +71,21 @@ export function renderBoxplot(
 
     renderBoxplotImpl(ctx, node, o, scale, b, dim);
   };
+  r.init = (nodes) => {
+    scale01 = autoResolveScale(o.scale, () =>
+      nodes
+        .map((n) => {
+          const b = acc(n);
+          if (Array.isArray(b)) {
+            return b;
+          }
+          return [(b as IBoxPlot).min, (b as IBoxPlot).max];
+        })
+        .flat()
+    );
+  };
   r.defaultHeight = 10;
-  r.defaultPosition = 'below';
+  r.defaultPosition = 'bottom';
   return r;
 }
 

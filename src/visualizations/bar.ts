@@ -1,5 +1,5 @@
 import { IAttrAccessor, IScale, IVisualization, INodeFunction } from './interfaces';
-import { resolveAccessor, resolveScale, resolveFunction } from './utils';
+import { resolveAccessor, resolveScale, resolveFunction, autoResolveScale } from './utils';
 
 export interface IBarOptions {
   scale: IScale;
@@ -18,13 +18,13 @@ export const defaultColorOptions = {
 export function renderBar(attr: IAttrAccessor<number>, options: Partial<IBarOptions> = {}): IVisualization {
   const o = Object.assign(
     {
-      scale: [0, 1],
+      scale: [0, Number.NaN],
     },
     defaultColorOptions,
     options
   );
   const acc = resolveAccessor(attr);
-  const scale = resolveScale(o.scale);
+  let scale = resolveScale(o.scale);
   const backgroundColor = resolveFunction(o.backgroundColor);
   const borderColor = resolveFunction(o.borderColor);
 
@@ -34,7 +34,11 @@ export function renderBar(attr: IAttrAccessor<number>, options: Partial<IBarOpti
     if (value != null && !Number.isNaN(value)) {
       ctx.fillStyle = backgroundColor(node);
       const v = scale(value);
-      ctx.fillRect(0, 0, dim.width * v, dim.height);
+      if (dim.position === 'left' || dim.position === 'right') {
+        ctx.fillRect(0, dim.height * (1 - v), dim.width, v * dim.height);
+      } else {
+        ctx.fillRect(0, 0, dim.width * v, dim.height);
+      }
     }
 
     const b = borderColor(node);
@@ -43,7 +47,11 @@ export function renderBar(attr: IAttrAccessor<number>, options: Partial<IBarOpti
       ctx.strokeRect(0, 0, dim.width, dim.height);
     }
   };
+  r.init = (nodes) => {
+    scale = autoResolveScale(o.scale, () => nodes.map(acc));
+  };
   r.defaultHeight = 5;
-  r.defaultPosition = 'below';
+  r.defaultWidth = 5;
+  r.defaultPosition = 'bottom';
   return r;
 }

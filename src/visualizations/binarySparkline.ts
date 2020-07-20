@@ -1,5 +1,5 @@
 import { IAttrAccessor, IVisualization, IScale, INodeFunction } from './interfaces';
-import { resolveAccessor, resolveScale, resolveFunction } from './utils';
+import { resolveAccessor, resolveScale, resolveFunction, autoResolveScale } from './utils';
 import { defaultColorOptions } from './bar';
 import { renderLine, renderArea } from './lineUtils';
 
@@ -65,7 +65,7 @@ export function renderBinarySparkLine(
 ): IVisualization {
   const o: IBinarySparkLineOptions = Object.assign(
     {
-      scale: [-1, 1],
+      scale: [Number.NaN, Number.NaN],
       centerValue: 0,
       aboveBackgroundColor: 'green',
       belowBackgroundColor: 'red',
@@ -78,7 +78,7 @@ export function renderBinarySparkLine(
     options
   );
   const acc = resolveAccessor(attr);
-  const yScale01 = resolveScale(o.scale);
+  let yScale01 = resolveScale(o.scale);
   const borderColor = resolveFunction(o.borderColor);
   const belowBackgroundColor = resolveFunction(o.belowBackgroundColor);
   const belowLineColor = resolveFunction(o.belowLineColor);
@@ -146,6 +146,9 @@ export function renderBinarySparkLine(
     }
   };
 
+  r.init = (nodes) => {
+    yScale01 = autoResolveScale(o.scale, () => nodes.map((v) => acc(v) || []).flat());
+  };
   r.defaultHeight = 20;
   r.defaultPosition = 'bottom';
   return r;

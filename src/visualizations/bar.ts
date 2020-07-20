@@ -2,8 +2,21 @@ import { IAttrAccessor, IScale, IVisualization, INodeFunction } from './interfac
 import { resolveAccessor, resolveScale, resolveFunction, autoResolveScale } from './utils';
 
 export interface IBarOptions {
+  /**
+   * the domain scale to use to map to the 0...1 scale
+   * in the array version a value of NaN indicate to automatically derive it from the data
+   * @default [0, NaN]
+   */
   scale: IScale;
+  /**
+   * background color of the bar
+   * @default '#cccccc'
+   */
   backgroundColor: INodeFunction<string>;
+  /**
+   * border color to frame the bar
+   * @default '#a0a0a0'
+   */
   borderColor: INodeFunction<string>;
 }
 
@@ -15,6 +28,11 @@ export const defaultColorOptions = {
   borderColor: '#a0a0a0',
 };
 
+/**
+ * renders a horizontal or vertical bar
+ * @param attr the accessor to the value of the node
+ * @param options additional customization options
+ */
 export function renderBar(attr: IAttrAccessor<number>, options: Partial<IBarOptions> = {}): IVisualization {
   const o = Object.assign(
     {

@@ -6,11 +6,29 @@ import cy from 'cytoscape';
 import seedrandom from 'seedrandom';
 
 export interface IBoxplotOptions extends BoxplotStatsOptions, IBarOptions {
+  /**
+   * pixel radius when rendering outliers
+   * @default 2
+   */
   outlierRadius: number;
+  /**
+   * color for rendering outliers
+   */
   outlierBackgroundColor: INodeFunction<string>;
+  /**
+   * pixel radius when rendering items
+   * @default 0
+   */
   itemRadius: number;
+  /**
+   * color for rendering items
+   */
   itemBackgroundColor: INodeFunction<string>;
 
+  /**
+   * padding for a smaller boxplot box
+   * @default 1
+   */
   boxPadding: number;
 }
 

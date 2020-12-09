@@ -12,10 +12,10 @@ npm-debug.log*
 
 # Build files
 /.tmp
-/dist
+/build
 
 *.tgz
 /.vscode/extensions.json
 /docs
-/samples/*.js
-*.map
+samples/*.map
+samples/*.js

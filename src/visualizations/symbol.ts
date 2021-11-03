@@ -8,7 +8,7 @@ import {
   SymbolType,
   symbolWye,
 } from 'd3-shape';
-import { INodeFunction, IVisualization } from './interfaces';
+import type { INodeFunction, IVisualization } from './interfaces';
 import { resolveFunction } from './utils';
 
 const symbols = {

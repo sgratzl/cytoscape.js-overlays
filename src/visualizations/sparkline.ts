@@ -1,4 +1,4 @@
-import { IAttrAccessor, IVisualization, IScale, INodeFunction } from './interfaces';
+import type { IAttrAccessor, IVisualization, IScale, INodeFunction } from './interfaces';
 import { resolveAccessor, resolveScale, resolveFunction, autoResolveScale } from './utils';
 import { defaultColorOptions } from './bar';
 import { renderLine, renderArea } from './lineUtils';

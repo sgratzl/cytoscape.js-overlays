@@ -1,6 +1,6 @@
 import { histogram } from 'd3-array';
 import { defaultColorOptions } from './bar';
-import { IAttrAccessor, INodeFunction, IVisualization } from './interfaces';
+import type { IAttrAccessor, INodeFunction, IVisualization } from './interfaces';
 import { resolveAccessor, resolveFunction } from './utils';
 
 export interface IHist {
@@ -46,7 +46,7 @@ export function renderHistogram(
   const backgroundColor = resolveFunction(o.backgroundColor);
   const borderColor = resolveFunction(o.borderColor);
 
-  const r: IVisualization = (ctx, node, dim) => {
+  const viz: IVisualization = (ctx, node, dim) => {
     const value = acc(node);
     ctx.strokeStyle = borderColor(node);
     ctx.strokeRect(0, 0, dim.width, dim.height);
@@ -68,31 +68,31 @@ export function renderHistogram(
       offset += binWidth + o.barPadding;
     }
   };
-  r.init = (nodes) => {
+  viz.init = (nodes) => {
     if (!Number.isNaN(maxBin) && !Number.isNaN(scale[0]) && !Number.isNaN(scale[1])) {
       return;
     }
 
     // derive hist borders
-    const r = nodes.reduce(
-      (r, node) => {
+    const output = nodes.reduce(
+      (out, node) => {
         const v = acc(node);
         if (v == null || !Array.isArray(v)) {
-          return r;
+          return out;
         }
         if (isHist(v)) {
-          r.maxBin = v.reduce((m, b) => Math.max(m, b), r.maxBin);
-          return r;
+          out.maxBin = v.reduce((m, b) => Math.max(m, b), out.maxBin);
+          return out;
         }
 
         const b = histogram<number, number>();
         const hist = b(v);
-        r.maxBin = hist.reduce((m, b) => Math.max(m, b.length), r.maxBin);
+        out.maxBin = hist.reduce((m, bin) => Math.max(m, bin.length), out.maxBin);
         if (hist.length > 0) {
-          r.min = Math.min(r.min, hist[0]!.x0!);
-          r.max = Math.max(r.max, hist[hist.length - 1]!.x1!);
+          out.min = Math.min(out.min, hist[0]!.x0!);
+          out.max = Math.max(out.max, hist[hist.length - 1]!.x1!);
         }
-        return r;
+        return out;
       },
       {
         min: Number.POSITIVE_INFINITY,
@@ -101,11 +101,11 @@ export function renderHistogram(
       }
     );
     if (Number.isNaN(maxBin)) {
-      maxBin = r.maxBin;
+      maxBin = output.maxBin;
     }
-    scale = [Number.isNaN(scale[0]) ? r.min : scale[0], Number.isNaN(scale[1]) ? r.max : scale[0]];
+    scale = [Number.isNaN(scale[0]) ? output.min : scale[0], Number.isNaN(scale[1]) ? output.max : scale[0]];
   };
-  r.defaultHeight = 20;
-  r.defaultPosition = 'bottom';
-  return r;
+  viz.defaultHeight = 20;
+  viz.defaultPosition = 'bottom';
+  return viz;
 }

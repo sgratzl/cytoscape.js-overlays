@@ -1,5 +1,5 @@
-import { IAttrAccessor, IScale, INodeFunction } from './interfaces';
-import cy from 'cytoscape';
+import type { IAttrAccessor, IScale, INodeFunction } from './interfaces';
+import type cy from 'cytoscape';
 
 export function resolveAccessor<T>(attr: IAttrAccessor<T>): (v: cy.NodeSingular) => T | null {
   return typeof attr === 'function' ? attr : (node: cy.NodeSingular) => node.data(attr);

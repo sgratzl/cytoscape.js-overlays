@@ -1,5 +1,5 @@
-import cy from 'cytoscape';
-import { IVisualization, OverlayPosition } from './visualizations';
+import type cy from 'cytoscape';
+import type { IVisualization, OverlayPosition } from './visualizations';
 import { layers, ICanvasLayer, ICanvasLayerOptions, renderPerNode, INodeCanvasLayerOption } from 'cytoscape-layers';
 
 export interface IOverlayVisualization {
@@ -44,12 +44,12 @@ function stackVertical(pos: OverlayPosition) {
 }
 export function overlays(
   this: cy.Core,
-  overlays: readonly (IOverlayVisualization | IVisualization)[],
+  definitions: readonly (IOverlayVisualization | IVisualization)[],
   options: Partial<IOverlayPluginOptions> = {}
 ): { remove(): void } {
   const layer = options.layer || layers(this).nodeLayer.insertAfter('canvas', options);
 
-  const overlayObjects = overlays.map(toFullVisualization);
+  const overlayObjects = definitions.map(toFullVisualization);
 
   const someInit = overlayObjects.filter((d) => d.vis.init != null);
 
@@ -139,7 +139,7 @@ export function overlays(
 
   function renderInfo(
     position: OverlayPosition,
-    overlays: Required<IOverlayVisualization>[],
+    visualizations: Required<IOverlayVisualization>[],
     ctx: CanvasRenderingContext2D,
     node: cy.NodeSingular,
     bb: cy.BoundingBox12 & cy.BoundingBoxWH
@@ -147,13 +147,13 @@ export function overlays(
     switch (position) {
       case 'bottom':
         ctx.translate(0, bb.h);
-        for (const overlay of overlays) {
+        for (const overlay of visualizations) {
           overlay.vis(ctx, node, { width: bb.w, height: overlay.height, position });
           ctx.translate(0, overlay.height + padding);
         }
         break;
       case 'left':
-        for (const overlay of overlays) {
+        for (const overlay of visualizations) {
           ctx.translate(-overlay.width, 0);
           overlay.vis(ctx, node, { width: overlay.width, height: bb.h, position });
           ctx.translate(-padding, 0);
@@ -161,13 +161,13 @@ export function overlays(
         break;
       case 'right':
         ctx.translate(bb.w, 0);
-        for (const overlay of overlays) {
+        for (const overlay of visualizations) {
           overlay.vis(ctx, node, { width: overlay.width, height: bb.h, position });
           ctx.translate(overlay.width + padding, 0);
         }
         break;
       case 'top':
-        for (const overlay of overlays) {
+        for (const overlay of visualizations) {
           ctx.translate(0, -overlay.height);
           overlay.vis(ctx, node, { width: bb.w, height: overlay.height, position });
           ctx.translate(0, -padding);
@@ -176,8 +176,8 @@ export function overlays(
       case 'top-left':
       case 'bottom-left':
         // along the top line
-        ctx.translate(-overlays[0]!.width / 2, position === 'bottom-left' ? bb.h : 0);
-        for (const overlay of overlays) {
+        ctx.translate(-visualizations[0]!.width / 2, position === 'bottom-left' ? bb.h : 0);
+        for (const overlay of visualizations) {
           ctx.translate(0, -overlay.height / 2);
           overlay.vis(ctx, node, { width: overlay.width, height: overlay.height, position });
           ctx.translate(padding + overlay.width, overlay.height / 2);
@@ -185,8 +185,8 @@ export function overlays(
         break;
       case 'top-right':
       case 'bottom-right':
-        ctx.translate(bb.w + overlays[0]!.width / 2, position === 'bottom-right' ? bb.h : 0);
-        for (const overlay of overlays) {
+        ctx.translate(bb.w + visualizations[0]!.width / 2, position === 'bottom-right' ? bb.h : 0);
+        for (const overlay of visualizations) {
           ctx.translate(-overlay.width, -overlay.height / 2);
           overlay.vis(ctx, node, { width: overlay.width, height: overlay.height, position });
           ctx.translate(-padding, overlay.height / 2);

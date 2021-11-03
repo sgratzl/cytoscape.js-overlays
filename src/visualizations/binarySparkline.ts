@@ -1,4 +1,4 @@
-import { IAttrAccessor, IVisualization, IScale, INodeFunction } from './interfaces';
+import type { IAttrAccessor, IVisualization, IScale, INodeFunction } from './interfaces';
 import { resolveAccessor, resolveScale, resolveFunction, autoResolveScale } from './utils';
 import { defaultColorOptions } from './bar';
 import { renderLine, renderArea } from './lineUtils';
@@ -113,7 +113,7 @@ export function renderBinarySparkLine(
       ctx.stroke();
     }
 
-    const values = value.map((y, x) => ({ x, y: y! }));
+    const values = value.map((vy, x) => ({ x, y: vy! }));
     const [above, below] = splitSegments(value, o.centerValue);
 
     const bBG = belowBackgroundColor(node);

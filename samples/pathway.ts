@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-namespace */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace DefaultNS {
   declare const cytoscape: typeof import('cytoscape');
   // declare const CytoscapeLayers: typeof import('cytoscape-layers');
-  declare const CytoscapeOverlays: typeof import('../dist');
+  declare const CytoscapeOverlays: typeof import('../build');
   declare const cytoscapeSbgnStylesheet: any;
 
   const cy = cytoscape({

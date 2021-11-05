@@ -1,4 +1,4 @@
-import { IAttrAccessor, IVisualization, IScale, INodeFunction } from './interfaces';
+import type { IAttrAccessor, IVisualization, IScale, INodeFunction } from './interfaces';
 import { resolveAccessor, resolveScale, resolveFunction, autoResolveScale } from './utils';
 import { defaultColorOptions } from './bar';
 import { renderLine, renderArea } from './lineUtils';
@@ -48,7 +48,7 @@ export function renderSparkLine(
     const xScale = (i: number) => i * step + o.padding;
     const yScale = (v: number) => (1 - yScale01(v)) * dim.height;
 
-    const values = value.map((y, x) => ({ x, y }));
+    const values = value.map((y, x) => ({ x, y: y! }));
 
     const bg = backgroundColor(node);
     if (bg) {

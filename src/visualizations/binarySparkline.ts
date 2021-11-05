@@ -1,4 +1,4 @@
-import { IAttrAccessor, IVisualization, IScale, INodeFunction } from './interfaces';
+import type { IAttrAccessor, IVisualization, IScale, INodeFunction } from './interfaces';
 import { resolveAccessor, resolveScale, resolveFunction, autoResolveScale } from './utils';
 import { defaultColorOptions } from './bar';
 import { renderLine, renderArea } from './lineUtils';
@@ -22,7 +22,7 @@ function lineSplit(x1: number, y1: number, x2: number, y2: number, centerValue: 
   return (centerValue - y1) / m + x1;
 }
 
-function splitSegments(values: readonly number[], centerValue: number) {
+function splitSegments(values: readonly (number | null)[], centerValue: number) {
   const below: { x: number; y: number }[] = [];
   const above: { x: number; y: number }[] = [];
 
@@ -40,9 +40,9 @@ function splitSegments(values: readonly number[], centerValue: number) {
       continue;
     }
 
-    if (previousIndex != null && values[previousIndex] < centerValue !== v < centerValue) {
+    if (previousIndex != null && values[previousIndex]! < centerValue !== v < centerValue) {
       // crossed the line
-      const xc = lineSplit(previousIndex, values[previousIndex], i, v, centerValue);
+      const xc = lineSplit(previousIndex, values[previousIndex]!, i, v, centerValue);
       below.push({ x: xc, y: centerValue });
       above.push({ x: xc, y: centerValue });
     }
@@ -113,7 +113,7 @@ export function renderBinarySparkLine(
       ctx.stroke();
     }
 
-    const values = value.map((y, x) => ({ x, y }));
+    const values = value.map((vy, x) => ({ x, y: vy! }));
     const [above, below] = splitSegments(value, o.centerValue);
 
     const bBG = belowBackgroundColor(node);

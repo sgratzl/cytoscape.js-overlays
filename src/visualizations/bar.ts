@@ -1,4 +1,4 @@
-import { IAttrAccessor, IScale, IVisualization, INodeFunction } from './interfaces';
+import type { IAttrAccessor, IScale, IVisualization, INodeFunction } from './interfaces';
 import { resolveAccessor, resolveScale, resolveFunction, autoResolveScale } from './utils';
 
 export interface IBarOptions {

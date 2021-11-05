@@ -1,4 +1,4 @@
-import cy from 'cytoscape';
+import type cy from 'cytoscape';
 
 export type OverlayPosition =
   | 'top'

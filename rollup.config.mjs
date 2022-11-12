@@ -86,14 +86,14 @@ export default function Config(options) {
       },
       external: (v) => (isDependency(v) || isPeerDependency(v)) && ['d3-'].every((di) => !v.includes(di)),
     },
-    ((buildFormat('umd') && pkg.browser) || (buildFormat('umd-min') && pkg.unpkg)) && {
+    ((buildFormat('umd') && pkg.umd) || (buildFormat('umd-min') && pkg.unpkg)) && {
       ...base,
       input: fs.existsSync(base.input.replace('.ts', '.umd.ts')) ? base.input.replace('.ts', '.umd.ts') : base.input,
       output: [
         buildFormat('umd') &&
-          pkg.browser && {
+          pkg.umd && {
             ...base.output,
-            file: pkg.browser,
+            file: pkg.umd,
             format: 'umd',
             name: pkg.global,
           },

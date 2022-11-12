@@ -1,4 +1,4 @@
-import { histogram } from 'd3-array';
+import { bin } from 'd3-array';
 import { defaultColorOptions } from './bar';
 import type { IAttrAccessor, INodeFunction, IVisualization } from './interfaces';
 import { resolveAccessor, resolveFunction } from './utils';
@@ -22,7 +22,7 @@ function generateHist(value: readonly number[] | IHist, scale: [number, number])
   if (isHist(value)) {
     return value.bins;
   }
-  const b = histogram<number, number>();
+  const b = bin<number, number>();
   b.domain(scale);
   return b(value).map((d) => d.length);
 }
@@ -62,8 +62,8 @@ export function renderHistogram(
     const yScale = (v: number) => (v / maxBin) * dim.height;
 
     let offset = 0;
-    for (const bin of hist) {
-      const height = yScale(bin);
+    for (const histBin of hist) {
+      const height = yScale(histBin);
       ctx.fillRect(offset, dim.height - height, binWidth, height);
       offset += binWidth + o.barPadding;
     }
@@ -85,9 +85,9 @@ export function renderHistogram(
           return out;
         }
 
-        const b = histogram<number, number>();
+        const b = bin<number, number>();
         const hist = b(v);
-        out.maxBin = hist.reduce((m, bin) => Math.max(m, bin.length), out.maxBin);
+        out.maxBin = hist.reduce((m, histBin) => Math.max(m, histBin.length), out.maxBin);
         if (hist.length > 0) {
           out.min = Math.min(out.min, hist[0]!.x0!);
           out.max = Math.max(out.max, hist[hist.length - 1]!.x1!);

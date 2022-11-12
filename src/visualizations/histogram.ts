@@ -1,4 +1,4 @@
-import { histogram } from 'd3-array';
+import { bin } from 'd3-array';
 import { defaultColorOptions } from './bar';
 import type { IAttrAccessor, INodeFunction, IVisualization } from './interfaces';
 import { resolveAccessor, resolveFunction } from './utils';
@@ -22,7 +22,7 @@ function generateHist(value: readonly number[] | IHist, scale: [number, number])
   if (isHist(value)) {
     return value.bins;
   }
-  const b = histogram<number, number>();
+  const b = bin<number, number>();
   b.domain(scale);
   return b(value).map((d) => d.length);
 }
@@ -85,7 +85,7 @@ export function renderHistogram(
           return out;
         }
 
-        const b = histogram<number, number>();
+        const b = bin<number, number>();
         const hist = b(v);
         out.maxBin = hist.reduce((m, bin) => Math.max(m, bin.length), out.maxBin);
         if (hist.length > 0) {

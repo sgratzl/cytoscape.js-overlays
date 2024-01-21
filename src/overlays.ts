@@ -1,6 +1,12 @@
 import type cy from 'cytoscape';
 import type { IVisualization, OverlayPosition } from './visualizations';
-import { layers, ICanvasLayer, ICanvasLayerOptions, renderPerNode, INodeCanvasLayerOption } from 'cytoscape-layers';
+import {
+  layers,
+  type ICanvasLayer,
+  type ICanvasLayerOptions,
+  renderPerNode,
+  type INodeCanvasLayerOption,
+} from 'cytoscape-layers';
 
 export interface IOverlayVisualization {
   position?: OverlayPosition;

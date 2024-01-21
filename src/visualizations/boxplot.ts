@@ -1,7 +1,7 @@
 import type { IAttrAccessor, IVisualization, IDimension, INodeFunction } from './interfaces';
 import { resolveAccessor, resolveScale, resolveFunction, autoResolveScale } from './utils';
-import { IBoxPlot, boxplot, BoxplotStatsOptions } from '@sgratzl/boxplots';
-import { IBarOptions, defaultColorOptions } from './bar';
+import { type IBoxPlot, boxplot, type BoxplotStatsOptions } from '@sgratzl/boxplots';
+import { type IBarOptions, defaultColorOptions } from './bar';
 import type cy from 'cytoscape';
 import seedrandom from 'seedrandom';
 

@@ -5,7 +5,7 @@ import {
   symbolSquare,
   symbolStar,
   symbolTriangle,
-  SymbolType,
+  type SymbolType,
   symbolWye,
 } from 'd3-shape';
 import type { INodeFunction, IVisualization } from './interfaces';

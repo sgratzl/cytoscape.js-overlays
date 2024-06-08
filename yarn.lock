@@ -2316,9 +2316,9 @@ __metadata:
   linkType: hard
 
 "@sgratzl/boxplots@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "@sgratzl/boxplots@npm:1.3.0"
-  checksum: 10c0/cc8cc371eea26f1a4f0ce57d6018199cded8683862b0a79c5ce112fbb8cbce07e5c24f9931c379908aa8c6475177236a93618c94ac92036b83d799e8cc1aeaef
+  version: 1.3.1
+  resolution: "@sgratzl/boxplots@npm:1.3.1"
+  checksum: 10c0/123ca21d22dbb9ce0612c47f7fa62b991d520986e871a06097b62e0ea968e8a931f50b8be1faf337236b7658a4a79c7e7e6052d2473d93f6495fd95011553f19
   languageName: node
   linkType: hard
 
